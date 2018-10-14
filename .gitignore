@@ -1,0 +1,13 @@
+# just extra files:
+installed.md
+db.psql
+uniqueness.py
+
+# not ready:
+authentication.py
+install.py
+
+__pycache__/*
+*.рус
+.vscode
+tmp/*
