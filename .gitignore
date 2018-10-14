@@ -4,8 +4,8 @@
 
 
 # not ready:
-./app/uniqueness.py
-./app/authentication.py
+/app/uniqueness.py
+/app/authentication.py
 
 venv/*
 */__pycache__/*
