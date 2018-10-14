@@ -1,6 +1,7 @@
 # just extra files:
-./temp/installed.md
-./temp/db.pgsql
+/temp/installed.md
+/temp/db.pgsql
+
 
 # not ready:
 ./app/uniqueness.py
