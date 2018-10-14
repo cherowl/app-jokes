@@ -38,7 +38,7 @@ class DataBase(object):
             print(e)
 
     def create_table(self):
-        if self.conn:
+        if self.conn is not None:
             try:
                 for command in self.commands:
                     self.cur.execute(command)
@@ -64,7 +64,7 @@ class DataBase(object):
     def close(self):
         try:
             self.close()
-            conn.close()
+            self.conn.close()
         except (Exception, psycopg2.DatabaseError) as e:
             print(e)
 

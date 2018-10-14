@@ -18,5 +18,8 @@ setuptools.setup(
         # "License :: OSI Approved :: MIT License",
         # "Operating System :: OS Independent",
     ],
-    install_requires=['Flask', 'PostgreSQL', 'pip-tools', 'psycopg2']
+    install_requires=['flask', 'pip-tools', 'psycopg2', 'configparser', 'requests']
 )
+
+export FLASK_ENV=development
+export FLASK_APP=yourapplication

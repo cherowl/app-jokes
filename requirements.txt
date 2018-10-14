@@ -4,9 +4,18 @@
 #
 #    pip-compile --output-file /home/elena/workspace/selectel/api-jokes/requirements.txt /home/elena/workspace/selectel/api-jokes/setup.py
 #
-click==7.0                # via flask
+certifi==2018.8.24        # via requests
+chardet==3.0.4            # via requests
+click==7.0                # via flask, pip-tools
+configparser==3.5.0
 flask==1.0.2
+idna==2.7                 # via requests
 itsdangerous==0.24        # via flask
 jinja2==2.10              # via flask
 markupsafe==1.0           # via jinja2
+pip-tools==3.1.0
+psycopg2==2.7.5
+requests==2.19.1
+six==1.11.0               # via pip-tools
+urllib3==1.23             # via requests
 werkzeug==0.14.1          # via flask
