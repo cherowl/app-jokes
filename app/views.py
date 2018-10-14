@@ -2,15 +2,15 @@
 
 from app import app
 import requests
-from authentication import User
+# from authentication import User
 
-@app.route('/')
-def start():
-    return "To start go to /login, sing in and create your database of jokes!"
+# @app.route('/')
+# def start():
+#     return "To start go to /login, sing in and create your database of jokes!\n"
 
 @app.route('/user/<name>')
 def welcome_back(name):
-    return "Welcome back, {}!".format(name)
+    return "Welcome back, {}\n!".format(name)
 
 
 @app.route('/login')
@@ -18,14 +18,15 @@ def login():
     '''
     Register a new user
     '''
+    pass
 
 @app.route('/logout')
 def logout():
    pass
     
 
-
 @app.route('/user/<name>/generate-joke')
+# @login_required 
 def generate_joke(name):
     '''
     Generate a joke using api: https://geek-jokes.sameerkumar.website/api

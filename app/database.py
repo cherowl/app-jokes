@@ -1,4 +1,5 @@
-from config import config
+# -*- coding: utf-8 -*-
+from temp.config import config
 import psycopg2
 
 class DataBase(object):
@@ -32,7 +33,7 @@ class DataBase(object):
         )
         # read the connection parameters
         try:
-            self.params = config(section='postgresql')
+            self.params = config(section='postgresql_default')
         except (Exception, psycopg2.DatabaseError) as e:
             print(e)
 

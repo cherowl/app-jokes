@@ -1,12 +1,12 @@
 # just extra files:
-installed.md
-db.psql
-uniqueness.py
+./temp/installed.md
+./temp/db.pgsql
 
 # not ready:
-authentication.py
-install.py
+./app/uniqueness.py
+./app/authentication.py
 
+venv/*
 __pycache__/*
 *.рус
 .vscode
