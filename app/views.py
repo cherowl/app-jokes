@@ -1,25 +1,20 @@
 # -*- coding: utf-8 -*-
-
-from app import app
 import requests
-import database as db
+from app import app
+from app import db
+from flask import flash
+# from app import oid
 # from authentication import User
+
 
 @app.route('/')
 def start():
+    # flash("Test flash")
     return "To start go to /login, sing in and create your database of jokes!\n"
 
-@app.route('/sign_up', methods=['GET', 'POST'])
-def sign_up():
-    if request.method == "POST":
-        user_id = db.add_user(password=form.password.data)
-        user = User(user_id=user_id)
-        login_user(user, form.remember_me.data)
-        return redirect(url_for('index'))
-    return render_template('auth/sign_up.html', form=form)
 
-
-@app.route('/login')
+@app.route('/login', methods = ['GET', 'POST'])
+# @oid.loginhandler
 def login():
     '''
     Register a new user
@@ -32,8 +27,15 @@ def logout():
 
 @app.route('/user/<name>')
 def welcome_back(name):
-    return "Welcome back, {}!\n".format(name)
+    return "Welcome back, {}!\n \
+            - generate a joke /generate_joke \n \
+            - see list of jokes /show_jokes \n \
+            - delete the joke /delete_joke \n \
+            - update the joke \n".format(name)
     
+@app.route('/user/<name>/show_jokes', methods = ['GET'])
+def show_jokes(name):
+    return db.show_user_jokes(id_user="id")
 
 @app.route('/user/<name>/generate_joke')
 # @login_required 

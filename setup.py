@@ -1,11 +1,12 @@
 import setuptools
+import subprocess
 
 with open("README.md", "r") as fh:
-    long_description = fh.read()
+    long_description = fh.read()    # TODO
 
 setuptools.setup(
     name="api-jokes",
-    version="0.0.1",
+    version="1.0",
     author="Elena Cherkasova",
     author_email="cherowl@yandex.ru",
     description="RESTful API created with Flask and using PostgreSQL. Generate jokes for users.",
@@ -13,8 +14,12 @@ setuptools.setup(
     long_description_content_type="...",
     url="git@github.com:cherowl/api-jokes.git",
     packages=setuptools.find_packages(),
-    install_requires=['flask', 'pip-tools', 'psycopg2', 'configparser', 'requests']
+    # classifiers=[
+    #     "Programming Language :: Python :: 3.7",
+    #     "Operating System :: OS Linux",
+    # ],
+    install_requires=['flask', 'pip-tools', 'configparser', 'requests',]
 )
 
-export FLASK_ENV=development
-export FLASK_APP=yourapplication
+subprocess.run("export FLASK_ENV=development")
+subprocess.run("export FLASK_APP=run")
