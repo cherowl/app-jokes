@@ -13,11 +13,6 @@ setuptools.setup(
     long_description_content_type="...",
     url="git@github.com:cherowl/api-jokes.git",
     packages=setuptools.find_packages(),
-    classifiers=[
-        "Programming Language :: Python :: 3.5",
-        # "License :: OSI Approved :: MIT License",
-        # "Operating System :: OS Independent",
-    ],
     install_requires=['flask', 'pip-tools', 'psycopg2', 'configparser', 'requests']
 )
 

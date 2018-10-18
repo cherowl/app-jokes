@@ -1,10 +1,9 @@
-# just extra files:
-/temp/installed.md
-/temp/db.pgsql
-
+# extra
+info.md
 
 # not ready:
 /app/uniqueness.py
+/app/database.py
 /app/authentication.py
 
 venv/*

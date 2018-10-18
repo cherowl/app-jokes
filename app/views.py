@@ -2,11 +2,21 @@
 
 from app import app
 import requests
+import database as db
 # from authentication import User
 
 @app.route('/')
 def start():
     return "To start go to /login, sing in and create your database of jokes!\n"
+
+@app.route('/sign_up', methods=['GET', 'POST'])
+def sign_up():
+    if request.method == "POST":
+        user_id = db.add_user(password=form.password.data)
+        user = User(user_id=user_id)
+        login_user(user, form.remember_me.data)
+        return redirect(url_for('index'))
+    return render_template('auth/sign_up.html', form=form)
 
 
 @app.route('/login')
@@ -25,7 +35,7 @@ def welcome_back(name):
     return "Welcome back, {}!\n".format(name)
     
 
-@app.route('/user/<name>?/generate_joke')
+@app.route('/user/<name>/generate_joke')
 # @login_required 
 def generate_joke():
     '''

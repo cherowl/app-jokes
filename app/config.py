@@ -1,5 +1,10 @@
+import os
 from configparser import ConfigParser
 
+basedir = os.path.abspath(os.path.dirname(__file__))
+
+SQLALCHEMY_DATABASE_URI = 'sqlite:///' + os.path.join(basedir, 'app.db')
+SQLALCHEMY_MIGRATE_REPO = os.path.join(basedir, 'db_repository')
 
 def config(filename='config_data.ini', section=None):
     try:
