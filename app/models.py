@@ -1,27 +1,49 @@
 from app import db
+from werkzeug.security import generate_password_hash, check_password_hash
+from flask_login import UserMixin
 
-class User(db.Model):
+# UserMixin - maybe not needed
+
+class User(UserMixin, db.Model):
+    __tablename__='users'
     id = db.Column(db.Integer, primary_key = True)
-    meta = db.relationship('History', backref='user', lazy = 'dynamic')
+    name = db.Column(db.String(64), unique=True, nullabl=False)
+    password_hash = db.Column(db.String(128), nullable=False)   
+    cookie = db.relationship('Cokie', backref='user', lazy = 'dynamic')
     jokes = db.relationship('Joke', backref='user', lazy = 'dynamic')
 
-    def __repr__(self):
-        return '<User %r>' % (self.id)
+    @property
+    def password(self):
+        raise AttributeError('Password is not a readable')
 
-class Joke(db.Model):
+    @password.setter
+    def password(self, password):
+        self.password_hash = generate_password_hash(password)
+
+    def verify_password(self, password):
+        return check_password_hash(self.password_hash, password)
+
+    def __repr__(self):
+        return '<User {}, {}, {}>'.format(self.id, self.name, self.password_hash)
+
+class Joke(UserMixin, db.Model):
+    __tablename__='jokes'
     id = db.Column(db.Integer, primary_key = True)
     text = db.Column(db.String(140), unique=True)
     user_id = db.Column(db.Integer, db.ForeignKey('user.id')) #backref='user',
 
     def __repr__(self):
-        return '<Joke %r>' % (self.text)
+        return '<Joke {}, {}, {}>'.format(self.id, self.text, self.user_id)
 
-class History(db.Model):
+# class for cookie 
+class Cokie(UserMixin, db.Model):
+    __tablename__='user_request_history'
     id = db.Column(db.Integer, primary_key = True)
-    ip = db.Column(db.Integer)
-    timestamp = db.Column(db.DateTime)
+    sid = db.Column(db.Integer, nullable=False)
+    ip = db.Column(db.Integer, nullable=False)
+    timestamp = db.Column(db.DateTime, nullable=False)
     user_id = db.Column(db.Integer, db.ForeignKey('user.id')) #backref='user',
 
     def __repr__(self):
-        return '<History %r>' % (self.ip)
+        return '<History {}, {}, {}, {}>'.format(self.ip, self.ip, self.timestamp, self.user_id)
 

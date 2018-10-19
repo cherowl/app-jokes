@@ -1,2 +1,2 @@
 # api-jokes
-RESTful api (Flask, PosgreSQL, Python)
+RESTf API (Flask, PosgreSQL, Python)
