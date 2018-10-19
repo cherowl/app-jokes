@@ -6,7 +6,9 @@ basedir = os.path.abspath(os.path.dirname(__file__))
 production_db = 'users_jokes.db'
 test_db = 'test.db'
 
+
 class Config:
+# os.urandom(24)
     SECRET_KEY = os.environ.get('SECRET_KEY') or 'hard to guess string'
     # SQLALCHEMY_COMMIT_ON_TEARDOWN = True
     SQLALCHEMY_DATABASE_URI = os.environ.get('DEV_DATABASE_URL') or \

@@ -1,40 +1,63 @@
 # -*- coding: utf-8 -*-
+from flask import flash, redirect, url_for, session, escape, request
+from flask_basicauth import required
 import requests
 from app import app
 from app import db
-from app import models as m
-from flask import flash, redirect, url_for
-from flask_basicauth import required, logout
+from app.models import User, Joke, Cookie
+from app import auth
+# from flask_login import login_required # different modules for create and check login NB!
+# from flask_basicauth import logout 
+ 
 
+# TODO make sessions + add routes
 
 @app.route('/') 
+@app.route('/api') 
 def start():
-    flash("To create your database of jokes you need an acount, so go to /api/login or sing in")
-    return redirect(url_for())
+    if 'user' in session:
+        return "Welcome back, {}!\n \
+                 - generate a joke /generate_joke \n \
+                 - get a joke /get_joke \n \
+                 - see list of jokes /show_jokes \n \
+                 - delete the joke /delete_joke \n \
+                 - update the joke \n".format(escape(session['user']))
+    else:
+        flash("To manage your database sing in, please")
+        return redirect(url_for(sign_in))
 
 # localhost:8000/api/login?name=ME&passwordHash=365aw4d84qaw84ae4w
 
-@app.route('/api/login?<name&<password>>', methods = ['GET', 'POST'])
+@app.route('/api/login', methods = ['GET', 'POST'])
 def login():
-    u = m.User()
-  
-@auth.route('/logout')
+    if request.method == "POST":
+        try:
+            name = request.get('name')
+            u = User(name=name, password_hash=request.get('password_hash'))
+            session['user'] = name
+            if u.unique():
+                db.session.add(u)
+                db.session.commit()
+                # redirect(url_for(auth))
+        except:
+            print("Will be redirection")
+    else:
+        return url_for('login')
+    
+@app.route('/api/sign_in')
+@auth.required
+def sign_in(name, password_hash):
+    # if     
+    return redirect(url_for('login'))
+
+#  logout with flask_basicauth  
+@app.route('/api/logout')
 @auth.required
 def logout():
-    logout()
+    # logout()
     flash('You have been logged out.')
     return redirect(url_for('start'))
-
-@app.route('/api/auth/<name>')
-def welcome_back(name):
-    return "Welcome back, {}!\n \
-            - generate a joke /generate_joke \n \
-            - get a joke /get_joke \n \
-            - see list of jokes /show_jokes \n \
-            - delete the joke /delete_joke \n \
-            - update the joke \n".format(name)
-    
-    
+  
 @app.route('/api/auth/<name>/get_joke', methods = ['GET'])
 @auth.required
 def show_jokes(name):

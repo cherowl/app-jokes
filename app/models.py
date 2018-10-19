@@ -12,6 +12,9 @@ class User(UserMixin, db.Model):
     cookie = db.relationship('Cokie', backref='user', lazy = 'dynamic')
     jokes = db.relationship('Joke', backref='user', lazy = 'dynamic')
 
+    def __repr__(self):
+        return '<User {}, {}, {}>'.format(self.id, self.name, self.password_hash)
+
     @property
     def password(self):
         raise AttributeError('Password is not a readable')
@@ -23,8 +26,11 @@ class User(UserMixin, db.Model):
     def verify_password(self, password):
         return check_password_hash(self.password_hash, password)
 
-    def __repr__(self):
-        return '<User {}, {}, {}>'.format(self.id, self.name, self.password_hash)
+# TODO 
+    def unique(self):
+        return True 
+        # check... maybe the flag unique=True will enougth
+
 
 class Joke(UserMixin, db.Model):
     __tablename__='jokes'
@@ -36,7 +42,7 @@ class Joke(UserMixin, db.Model):
         return '<Joke {}, {}, {}>'.format(self.id, self.text, self.user_id)
 
 # class for cookie 
-class Cokie(UserMixin, db.Model):
+class Cookie(UserMixin, db.Model):
     __tablename__='user_request_history'
     id = db.Column(db.Integer, primary_key = True)
     sid = db.Column(db.Integer, nullable=False)
@@ -45,5 +51,23 @@ class Cokie(UserMixin, db.Model):
     user_id = db.Column(db.Integer, db.ForeignKey('user.id')) #backref='user',
 
     def __repr__(self):
-        return '<History {}, {}, {}, {}>'.format(self.ip, self.ip, self.timestamp, self.user_id)
+        return '<Cookie {}, {}, {}, {}, {}>'.format(
+            self.id, self.ip, self.sid, self.timestamp, self.user_id
+        )
+
+# ?
+class Unique(object): 
+    def __init__(self, column, session, message="Already exists."): 
+     self.column = column 
+     self.session = session 
+     self.message = message 
+
+    def __call__(self, form, field): 
+        pass 
+
+# class Register(Form): 
+#     email = EmailField('Email', [Unique(User.email, db.session)]) 
+
+# class Register(Form): 
+#     email = EmailField('Email', [Unique(User.email)]) 
 
