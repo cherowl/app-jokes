@@ -7,7 +7,7 @@ from flask_login import UserMixin
 class User(UserMixin, db.Model):
     __tablename__='users'
     id = db.Column(db.Integer, primary_key = True)
-    name = db.Column(db.String(64), unique=True, nullabl=False)
+    name = db.Column(db.String(64), unique=True, nullable=False)
     password_hash = db.Column(db.String(128), nullable=False)   
     cookie = db.relationship('Cokie', backref='user', lazy = 'dynamic')
     jokes = db.relationship('Joke', backref='user', lazy = 'dynamic')

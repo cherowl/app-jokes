@@ -1,12 +1,12 @@
 # -*- coding: utf-8 -*-
 from flask import flash, redirect, url_for, session, escape, request
-from flask_basicauth import required
+# from flask_basicauth import required ?? dosn't work
 import requests
 from app import app
 from app import db
 from app.models import User, Joke, Cookie
 from app import auth
-# from flask_login import login_required # different modules for create and check login NB!
+from flask_login import login_required # different modules for create and check login NB!
 # from flask_basicauth import logout 
  
 
@@ -45,32 +45,32 @@ def login():
         return url_for('login')
     
 @app.route('/api/sign_in')
-@auth.required
+@login_required
 def sign_in(name, password_hash):
     # if     
     return redirect(url_for('login'))
 
 #  logout with flask_basicauth  
 @app.route('/api/logout')
-@auth.required
+@login_required
 def logout():
     # logout()
     flash('You have been logged out.')
     return redirect(url_for('start'))
   
 @app.route('/api/auth/<name>/get_joke', methods = ['GET'])
-@auth.required
-def show_jokes(name):
+@login_required
+def get_joke(name):
     pass
 
 
 @app.route('/api/auth/<name>/show_jokes', methods = ['GET'])
-@auth.required
+@login_required
 def show_jokes(name):
     pass
 
 @app.route('/api/auth/<name>/generate_joke', methods = ['PUT'])
-@auth.required 
+@login_required 
 def generate_joke(name):
     '''
     Generate a joke using api: https://geek-jokes.sameerkumar.website/api
