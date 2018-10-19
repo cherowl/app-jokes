@@ -18,8 +18,10 @@ setuptools.setup(
     #     "Programming Language :: Python :: 3.7",
     #     "Operating System :: OS Linux",
     # ],
-    install_requires=['flask', 'pip-tools', 'configparser', 'requests',]
+    install_requires=['flask', 'pip-tools', 'configparser', 'requests', 'flask-sqlalchemy', 'flask-exceptional'] # pysqlite3 or sqlite3 
 )
+
+# flask-migrate
 
 subprocess.run("export FLASK_ENV=development")
 subprocess.run("export FLASK_APP=run")

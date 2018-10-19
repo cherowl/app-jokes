@@ -3,9 +3,6 @@ import requests
 from app import app
 from app import db
 from flask import flash
-# from app import oid
-# from authentication import User
-
 
 @app.route('/')
 def start():
@@ -50,4 +47,4 @@ def generate_joke():
 
     else:
         if response:
-            return response.json()+"\n"
+            return response.json()+"\n" 

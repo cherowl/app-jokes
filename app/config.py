@@ -3,7 +3,7 @@ from configparser import ConfigParser
 
 basedir = os.path.abspath(os.path.dirname(__file__))
 
-SQLALCHEMY_DATABASE_URI = 'sqlite:///' + os.path.join(basedir, 'app.db')
+SQLALCHEMY_DATABASE_URI = 'sqlite:///' + os.path.join(basedir, 'users_jokes.db')
 SQLALCHEMY_MIGRATE_REPO = os.path.join(basedir, 'db_repository')
 
 def config(filename='config_data.ini', section=None):
@@ -30,8 +30,8 @@ def config(filename='config_data.ini', section=None):
         return data
 
 
-# test
-test = config(section='flask')
-if test:
-    for key, val in test.items():
-        print("{}: {}".format(key, val))
+# # test
+# test = config(section='flask')
+# if test:
+#     for key, val in test.items():
+#         print("{}: {}".format(key, val))
