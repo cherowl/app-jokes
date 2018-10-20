@@ -26,9 +26,9 @@ def start():
         flash("To manage your database sing in, please")
         return redirect(url_for(sign_in))
 
-# localhost:8000/api/login?name=ME&passwordHash=365aw4d84qaw84ae4w
+# localhost:8000/login?name=ME&passwordHash=365aw4d84qaw84ae4w
 
-@app.route('/api/login', methods = ['GET', 'POST'])
+@app.route('/login', methods = ['GET', 'POST'])
 def login():
     if request.method == "POST":
         try:
@@ -44,32 +44,32 @@ def login():
     else:
         return url_for('login')
     
-@app.route('/api/sign_in')
+@app.route('/sign_in')
 @login_required
 def sign_in(name, password_hash):
     # if     
-    return redirect(url_for('login'))
+    return login()
 
 #  logout with flask_basicauth  
-@app.route('/api/logout')
+@app.route('/logout')
 @login_required
 def logout():
-    # logout()
+    session['logged_in'] = False
     flash('You have been logged out.')
-    return redirect(url_for('start'))
+    return start()
   
-@app.route('/api/auth/<name>/get_joke', methods = ['GET'])
+@app.route('/auth/<name>/get_joke', methods = ['GET'])
 @login_required
 def get_joke(name):
     pass
 
 
-@app.route('/api/auth/<name>/show_jokes', methods = ['GET'])
+@app.route('/auth/<name>/show_jokes', methods = ['GET'])
 @login_required
 def show_jokes(name):
     pass
 
-@app.route('/api/auth/<name>/generate_joke', methods = ['PUT'])
+@app.route('/auth/<name>/generate_joke', methods = ['GET', 'PUT'])
 @login_required 
 def generate_joke(name):
     '''
