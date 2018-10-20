@@ -2,7 +2,7 @@ from src.app import create_simple_app
 from src.app import create_app
 
 if __name__ == '__main__':
-    app, db =   ()    
+    app, db = create_app()
     port = app.config["APP_PORT"]
     development_mode = app.config.get("DEVELOPMENT", False)
 

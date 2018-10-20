@@ -1,11 +1,11 @@
 import os
 import logging
 
-from flask import Flask
+from flask import Flask, session
 from flask_cors import CORS
 from flask_basicauth import BasicAuth
-from flask_sqlalchemy import SQLAlchemy
 
+from src import database as db
 from src.auth_handlers import auth
 from src.jokes_handlers import jokes
 
@@ -31,11 +31,12 @@ def create_app():
     # init sqlalchemy db connection
     auth = BasicAuth(app)
 
-#??? eqivalent to db.init or not
-    db = SQLAlchemy(app) 
+    db.init(app)
 
     app.register_blueprint(auth, url_prefix='/auth')
     app.register_blueprint(jokes, url_prefix='/jokes')
+
+    session['logging_in'] == False
 
     return app, db
 
@@ -46,4 +47,5 @@ def create_simple_app():
                         level=app.config['LOG_LEVEL'])
     app.config.from_envvar("CONFIG")    
     db = SQLAlchemy(app)
+    session['logging_in'] == False
     return app, db

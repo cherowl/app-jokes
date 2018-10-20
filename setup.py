@@ -13,9 +13,11 @@ setuptools.setup(
     long_description_content_type="...",
     url="git@github.com:cherowl/api-jokes.git",
     packages=setuptools.find_packages(),
-    install_requires=['flask', 'pip-tools', 'configparser', 'requests', 'flask-sqlalchemy', 'flask-exceptional', 'werkzeug', 'flask_login', 'flask_basicauth', 'itsdangerous'] 
+    install_requires=['flask', 'pip-tools', 'configparser', 'requests', 'flask-sqlalchemy', 'werkzeug', 'flask_basicauth', 'functools'] 
     
 )
+
+# 'itsdangerous', 'flask_cors'
 
 # sqlite3 on server
 # change it again to postgresql

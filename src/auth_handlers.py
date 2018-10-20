@@ -1,8 +1,29 @@
 import logging
-from flask import session, request, abort, Blueprint
-from src import app, models
 
-auth = Blueprint("auth", __name__)session
+from flask import session, request, abort, Blueprint, Response, escape
+
+from functools import wraps
+
+from src import models, db
+
+auth = Blueprint("auth", __name__)
+
+@auth.route('/', methods=["GET"])  
+def start():
+    try:
+        offer =" - generate a joke /generate_joke \n \
+                 - get a joke /get_joke \n \
+                 - see list of jokes /show_jokes \n \
+                 - delete the joke /delete_joke \n \
+                 - update the joke \n"
+        if session['logging_in'] == True:
+            name = escape(session['username'])
+            return f"Hi {name}. Welcome back!\n" + offer
+        elif session['logging_in'] == False: 
+            return "Hey! Welcome to the planet of Jokes."
+    except Exception as e:
+        logging.info(e)
+        abort(500)
 
 
 @auth.route("/login", methods=["POST"])
@@ -13,62 +34,50 @@ def login():
         password = request.form["password"]
         if user is not None and user.check_password(password):
             session["username"] = username
-            user = models.User(name=username, password_hash=password)
-            db.session.add(u)
+            session['logging_in'] = True
+            user = models.User(name=username, password=password)
+            db.session.add(user)
             db.session.commit()
             logging.info("Login by user = {}".format(username))
-            return "OK", 200, {"Access-Control-Allow-Credentials": "true"}
-        else:
-            logging.info("Login denied for user = {}".format(username))
-            abort(401)
-    except:
-        (Exception, e)
-        loggin.error(e)
+            return Response(
+                        "You're logged in successfuly", 
+                        status='200',
+                        headers={"Access-Control-Allow-Credentials": "true"})
+        else: raise Exception
+    except Exception as e:
+        logging.info(e, "Login denied for user = {}".format(username))
+        abort(401)    
 
 
 @auth.route("/logout", methods=["POST"])
+@auth_required()
 def logout():
-    logging.info("Logout by user = {}".format(session.get("username")))
-    session.pop("username", None)
-    return "Logged out"
-
-
-@auth.before_request
-def before_request():
-    if "username" not in session and request.endpoint != "auth.login":
-        logging.info("Access denied")
+    try:
+        logging.info("Logout by user = {}".format(session.get("username")))
+        session.pop("username", None)
+        session['logging_in'] = False
+        return Response(
+                    "You're logged out", 
+                    status='200')
+    except Exception as e:
+        logging.error(e)
         abort(401)
 
 
+# @auth.before_request
+# def before_request():
+#     try:
+#         if escape(session['username']) not in session and request.endpoint != "auth.login":
+#             pass
+#         else: raise Exception
+#     except Exception as e:
+#         logging.error(e, "Access denied")
+#         abort(401)
 
-
-@app.route('/login', methods = ['GET', 'POST'])
-def login():
-    if request.method == "POST":
-        try:
-            name = request.get('name')
-            u = User(name=name, password_hash=request.get('password_hash'))
-            session['user'] = name
-            if u.unique():
-                db.session.add(u)
-                db.session.commit()
-                # redirect(url_for(auth))
-        except:
-            print("Will be redirection")
-    else:
-        return url_for('login')
-    
-@app.route('/sign_in')
-@login_required
-def sign_in(name, password_hash):
-    # if     
-    return login()
-
-#  logout with flask_basicauth  
-@app.route('/logout')
-@login_required
-def logout():
-    session['logged_in'] = False
-    flash('You have been logged out.')
-    return start()
-  
+def auth_required(f):
+    @wraps(f)
+    def wrapper(*args, **kwargs):
+        if session['logging_in'] == False:
+            return login()
+        return f(*args, **kwargs)
+    return wrapper
