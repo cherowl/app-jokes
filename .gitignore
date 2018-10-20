@@ -1,6 +1,8 @@
 # extra
 info.md
 load.sh
+test.py
+/ygn/*
 
 # not ready:
 /app/uniqueness.py
