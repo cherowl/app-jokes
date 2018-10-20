@@ -9,7 +9,7 @@ class User(UserMixin, db.Model):
     id = db.Column(db.Integer, primary_key = True)
     name = db.Column(db.String(64), unique=True, nullable=False)
     password_hash = db.Column(db.String(128), nullable=False)   
-    cookie = db.relationship('Cokie', backref='user', lazy = 'dynamic')
+    meta = db.relationship('Meta', backref='user', lazy = 'dynamic')
     jokes = db.relationship('Joke', backref='user', lazy = 'dynamic')
 
     def __repr__(self):
@@ -23,14 +23,8 @@ class User(UserMixin, db.Model):
     def password(self, password):
         self.password_hash = generate_password_hash(password)
 
-    def verify_password(self, password):
+    def check_password(self, password):
         return check_password_hash(self.password_hash, password)
-
-# TODO 
-    def unique(self):
-        return True 
-        # check... maybe the flag unique=True will enougth
-
 
 class Joke(UserMixin, db.Model):
     __tablename__='jokes'
@@ -41,8 +35,8 @@ class Joke(UserMixin, db.Model):
     def __repr__(self):
         return '<Joke {}, {}, {}>'.format(self.id, self.text, self.user_id)
 
-# class for cookie 
-class Cookie(UserMixin, db.Model):
+ 
+class meta(UserMixin, db.Model):
     __tablename__='user_request_history'
     id = db.Column(db.Integer, primary_key = True)
     sid = db.Column(db.Integer, nullable=False)
@@ -51,23 +45,6 @@ class Cookie(UserMixin, db.Model):
     user_id = db.Column(db.Integer, db.ForeignKey('user.id')) #backref='user',
 
     def __repr__(self):
-        return '<Cookie {}, {}, {}, {}, {}>'.format(
+        return '<meta {}, {}, {}, {}, {}>'.format(
             self.id, self.ip, self.sid, self.timestamp, self.user_id
         )
-
-# ?
-class Unique(object): 
-    def __init__(self, column, session, message="Already exists."): 
-     self.column = column 
-     self.session = session 
-     self.message = message 
-
-    def __call__(self, form, field): 
-        pass 
-
-# class Register(Form): 
-#     email = EmailField('Email', [Unique(User.email, db.session)]) 
-
-# class Register(Form): 
-#     email = EmailField('Email', [Unique(User.email)]) 
-

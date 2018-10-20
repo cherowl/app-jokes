@@ -1,10 +1,11 @@
 # -*- coding: utf-8 -*-
 from flask import flash, redirect, url_for, session, escape, request
-# from flask_basicauth import required ?? dosn't work
 import requests
-from app import app
+from src.models import User, Joke, Meta
+from src import models
+from app import app, db
+
 from app import db
-from app.models import User, Joke, Cookie
 from app import auth
 from flask_login import login_required # different modules for create and check login NB!
 # from flask_basicauth import logout 
@@ -27,36 +28,6 @@ def start():
 
 # localhost:8000/login?name=ME&passwordHash=365aw4d84qaw84ae4w
 
-@app.route('/login', methods = ['GET', 'POST'])
-def login():
-    if request.method == "POST":
-        try:
-            name = request.get('name')
-            u = User(name=name, password_hash=request.get('password_hash'))
-            session['user'] = name
-            if u.unique():
-                db.session.add(u)
-                db.session.commit()
-                # redirect(url_for(auth))
-        except:
-            print("Will be redirection")
-    else:
-        return url_for('login')
-    
-@app.route('/sign_in')
-@login_required
-def sign_in(name, password_hash):
-    # if     
-    return login()
-
-#  logout with flask_basicauth  
-@app.route('/logout')
-@login_required
-def logout():
-    session['logged_in'] = False
-    flash('You have been logged out.')
-    return start()
-  
 @app.route('/auth/<name>/get_joke', methods = ['GET'])
 @login_required
 def get_joke(name):

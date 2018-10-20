@@ -1,7 +1,12 @@
-from app import app
-import os
+from src.app import create_simple_app
+from src.app import create_app
 
 if __name__ == '__main__':
-    app.secret_key = os.urandom(12)
-    app.run()
+    app, db =   ()    
+    port = app.config["APP_PORT"]
+    development_mode = app.config.get("DEVELOPMENT", False)
+
+    print('--- Starting Flask App Server on port {} ---'.format(port))
+    app.run(app, port=port, debug=development_mode)
+
     
