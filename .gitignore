@@ -10,7 +10,8 @@ test.py
 /app/authentication.py
 
 venv/*
-*/__pycache__/*
-*.рус
+__pycache__
+*pyc
+*.iml
 .vscode
 
