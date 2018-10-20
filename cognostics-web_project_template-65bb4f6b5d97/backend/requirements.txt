@@ -1,0 +1,14 @@
+APScheduler==3.3.1
+Flask==0.12.2
+Flask_Cors==3.0.3
+Flask_Migrate==2.1.1
+Flask_SQLAlchemy==2.2
+Flask_Script==2.0.6
+Flask_SocketIO==2.8.6
+SQLAlchemy==1.1.11
+bcrypt==3.1.4
+eventlet==0.21.0
+psycopg2==2.7.1
+pytz==2017.2
+requests==2.18.2
+socketIO_client==0.7.2

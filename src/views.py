@@ -12,8 +12,7 @@ from flask_login import login_required # different modules for create and check 
 
 # TODO make sessions + add routes
 
-@app.route('/') 
-@app.route('/api') 
+@app.route('/')  
 def start():
     if 'user' in session:
         return "Welcome back, {}!\n \
@@ -24,7 +23,7 @@ def start():
                  - update the joke \n".format(escape(session['user']))
     else:
         flash("To manage your database sing in, please")
-        return redirect(url_for(sign_in))
+        return sing_in()
 
 # localhost:8000/login?name=ME&passwordHash=365aw4d84qaw84ae4w
 
@@ -69,7 +68,7 @@ def get_joke(name):
 def show_jokes(name):
     pass
 
-@app.route('/auth/<name>/generate_joke', methods = ['GET', 'PUT'])
+@app.route('/auth/<name>/generate_joke', methods = ['GET'])
 @login_required 
 def generate_joke(name):
     '''

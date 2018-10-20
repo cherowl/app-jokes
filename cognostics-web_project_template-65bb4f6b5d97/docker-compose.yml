@@ -1,0 +1,46 @@
+version: "3"
+
+services:
+  frontend:
+    build: ./
+    depends_on:
+      - backend
+    volumes:
+      - ~/volumes/certificates:/etc/ssl/localcerts
+    ports:
+      - 80:80
+      - 443:443
+    networks:
+      - default
+      - frontend-backend
+
+  backend:
+    build: ./backend
+    depends_on:
+      - postgresql
+    volumes:
+      - ~/volumes/backend_configs:/usr/src/app/config
+      - ~/volumes/migrations:/usr/src/app/migrations
+    environment:
+      CONFIG: /usr/src/app/config/production.py
+    expose:
+      - 8000
+    networks:
+      - frontend-backend
+      - backend-graphs
+      - backend-postgresql
+
+  postgresql:
+    image: postgres
+    volumes:
+      - ~/volumes/db_data:/var/lib/postgresql/data
+    networks:
+      - backend-postgresql
+
+networks:
+  frontend-backend:
+    internal: true
+  backend-postgresql:
+    internal: true
+  backend-graphs:
+    internal: true

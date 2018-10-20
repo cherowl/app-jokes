@@ -7,7 +7,7 @@ production_db = 'users_jokes.db'
 test_db = 'test.db'
 
 
-class Config:
+class Config(Сonfig):
     # SQLALCHEMY_COMMIT_ON_TEARDOWN = True
     SQLALCHEMY_DATABASE_URI = os.environ.get('DEV_DATABASE_URL') or \
                             'sqlite:///' + os.path.join(basedir, test_db)

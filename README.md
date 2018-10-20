@@ -1,2 +1,2 @@
-# api-jokes
-RESTf API (Flask, PosgreSQL, Python)
+# app-jokes
+REST APP (Flask, PosgreSQL, Python)
