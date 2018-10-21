@@ -2,6 +2,7 @@ import logging
 
 # Flask
 APP_PORT = 9000
+SECRET_KEY = 'some_secret'
 
 # Database
 DB_USER = "test_user"

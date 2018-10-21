@@ -2,9 +2,10 @@ import logging
 
 from flask import session, request, abort, Blueprint, Response, escape
 
-from functools import wraps
+# from functools import wraps
 
-from src import models, db
+from src import models
+from src.app import db
 
 auth = Blueprint("auth", __name__)
 
@@ -50,7 +51,7 @@ def login():
 
 
 @auth.route("/logout", methods=["POST"])
-@auth_required()
+# @auth_required
 def logout():
     try:
         logging.info("Logout by user = {}".format(session.get("username")))
@@ -64,20 +65,20 @@ def logout():
         abort(401)
 
 
-# @auth.before_request
-# def before_request():
-#     try:
-#         if escape(session['username']) not in session and request.endpoint != "auth.login":
-#             pass
-#         else: raise Exception
-#     except Exception as e:
-#         logging.error(e, "Access denied")
-#         abort(401)
+@auth.before_request
+def before_request():
+    try:
+        if escape(session['username']) not in session and request.endpoint != "auth.login":
+            pass
+        else: raise Exception
+    except Exception as e:
+        logging.error(e, "Access denied")
+        abort(401)
 
-def auth_required(f):
-    @wraps(f)
-    def wrapper(*args, **kwargs):
-        if session['logging_in'] == False:
-            return login()
-        return f(*args, **kwargs)
-    return wrapper
+# def auth_required(f):
+#     @wraps(f)
+#     def wrapper(*args, **kwargs):
+#         if session['logging_in'] == False:
+#             return login()
+#         return f(*args, **kwargs)
+#     return wrapper

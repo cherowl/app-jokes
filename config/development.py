@@ -11,6 +11,7 @@ BASIC_AUTH_PASSWORD = 'matrix'
 # Flask
 APP_PORT = 8000
 DEVELOPMENT = True
+SECRET_KEY = 'some_secret'
 
 # Database
 DB_USER = "cherowl"
