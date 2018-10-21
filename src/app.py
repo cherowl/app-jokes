@@ -37,7 +37,7 @@ def create_app():
         db.create_all()
 
     # db.init_app(app)
-
+    
     app.register_blueprint(auth, url_prefix='/auth')
     app.register_blueprint(jokes, url_prefix='/jokes')
 
