@@ -32,11 +32,11 @@ def create_app():
     # auth = BasicAuth(app)
 
     # init sqlalchemy db connection
-    # with app.app_context():
-    #     db.init_app(app)
-    #     db.create_all()
+    with app.app_context():
+        db.init_app(app)
+        db.create_all()
 
-    db.init_app(app)
+    # db.init_app(app)
 
     app.register_blueprint(auth, url_prefix='/auth')
     app.register_blueprint(jokes, url_prefix='/jokes')
@@ -53,7 +53,8 @@ def create_simple_app():
     logging.basicConfig(format="%(asctime)s %(levelname)s [%(module)s %(lineno)d] %(message)s",
                         level=app.config['LOG_LEVEL'])
     app.config.from_envvar("CONFIG")    
-    db.init_app(app)
-    # db.create_all()
+    with app.app_context():
+        db.init_app(app)
+        db.create_all()
     session['logging_in'] == False
     return app
