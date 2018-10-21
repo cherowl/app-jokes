@@ -1,11 +1,11 @@
 import logging
 
-from flask import session, request, abort, Blueprint, Response, escape
+from flask import session, request, abort, Blueprint, Response, escape, current_app
 
 # from functools import wraps
 
 from src import models
-from src.database import db
+from src.models import db
 
 auth = Blueprint("auth", __name__)
 

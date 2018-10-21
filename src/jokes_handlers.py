@@ -2,10 +2,10 @@ import logging
 
 import requests
 
-from flask import session, request, abort, Blueprint
+from flask import session, request, abort, Blueprint, current_app
 
 from src import models
-from src.database import db
+from src.models import db
 # from src.auth_handlers import auth_required
 
 jokes = Blueprint("jokes", __name__)

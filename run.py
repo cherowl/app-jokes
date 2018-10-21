@@ -1,5 +1,6 @@
 from src.app import create_simple_app
 from src.app import create_app
+# from flask import current_app
 
 if __name__ == '__main__':
     app = create_app()

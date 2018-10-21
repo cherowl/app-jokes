@@ -1,4 +1,4 @@
-from flask import Response
+from flask import Response, current_app
 from src.auth_handlers import auth
 
 @auth.errorhandler(401)
