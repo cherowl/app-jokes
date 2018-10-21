@@ -5,7 +5,7 @@ from flask import session, request, abort, Blueprint, Response, escape
 # from functools import wraps
 
 from src import models
-from src.app import db
+from src.database import db
 
 auth = Blueprint("auth", __name__)
 
@@ -23,7 +23,7 @@ def start():
         elif session['logging_in'] == False: 
             return "Hey! Welcome to the planet of Jokes."
     except Exception as e:
-        logging.info(e)
+        logging.error(e)
         abort(500)
 
 
@@ -36,9 +36,10 @@ def login():
         if user is not None and user.check_password(password):
             session["username"] = username
             session['logging_in'] = True
-            user = models.User(name=username, password=password)
-            db.session.add(user)
-            db.session.commit()
+            with app.app_context():
+                user = models.User(name=username, password=password)
+                db.session.add(user)
+                db.session.commit()
             logging.info("Login by user = {}".format(username))
             return Response(
                         "You're logged in successfuly", 
@@ -46,7 +47,7 @@ def login():
                         headers={"Access-Control-Allow-Credentials": "true"})
         else: raise Exception
     except Exception as e:
-        logging.info(e, "Login denied for user = {}".format(username))
+        logging.error(e, "Login denied for user = {}".format(username))
         abort(401)    
 
 

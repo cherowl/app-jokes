@@ -5,13 +5,13 @@ import requests
 from flask import session, request, abort, Blueprint
 
 from src import models
-from src.app import db
+from src.database import db
 # from src.auth_handlers import auth_required
 
 jokes = Blueprint("jokes", __name__)
 
 
-@jokes.route('/generate_joke/<int:primary_key>', methods = ['GET'])
+@jokes.route('/generate_joke/<int:primary_key>', methods = ['GET', 'POST'])
 # @auth_required
 def generate_joke():
     '''
@@ -19,13 +19,32 @@ def generate_joke():
     '''
     response = None
     try: 
-        response = requests.get("https://geek-jokes.sameerkumar.website/api")
-    except: Exception('Geek Api isn\'t responding...')
-
-    else:
-        if response:
-            return response.json()+"\n" 
-
+        if session['logged_in'] == True:    
+            user_id = models.User.query.filter(models.User.name == session['username']).id
+            response = requests.get("https://geek-jokes.sameerkumar.website/api")
+            if response:
+                    joke_text = response.json()+"\n" 
+                    try:
+                        with app.app_context():
+                            joke = models.Joke(text=joke_text, user_id=user_id)
+                            db.session.add(joke)
+                            db.session.commit()
+                    except (Exception, e):
+                        logging.error('Not unigue joke', e)
+                        return Response(
+                                "Not uniqie joke", 
+                                status='400')
+                    else:
+                        logging.info(f"A joke was generated and saved for {session['username']}")
+                        return Response(
+                            f"A joke was generated and saved to db", 
+                            status='200')
+            else: raise Exception
+        else: 
+            return login()
+    except:
+        logging.error('Geek Api isn\'t responding...')
+        abort(400) #"Bad request"
 
 @jokes.route('/get_joke/<int:primary_key>', methods = ['GET'])
 # @auth_required

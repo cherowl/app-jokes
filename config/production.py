@@ -9,7 +9,7 @@ SECRET_KEY = 'some_secret'
 DB_USER = "dummy_user"
 DB_PASSWORD = "dummy"
 DB_SERVER = "postgresql"
-DB_NAME = "dummy_name"
+DB_NAME = "users_jokes"
 
 # SQL-Alchemy
 SQLALCHEMY_DATABASE_URI = f"postgresql://{DB_USER}:{DB_PASSWORD}@{DB_SERVER}/{DB_NAME}"

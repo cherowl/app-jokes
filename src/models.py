@@ -1,4 +1,4 @@
-from src.app import db
+from src.database import db
 from werkzeug.security import generate_password_hash, check_password_hash
 
 class User(db.Model):
@@ -31,19 +31,19 @@ class Joke(db.Model):
     __tablename__='jokes'
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     text = db.Column(db.String(140), unique=True)
-    user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
+    user_id = db.Column(db.Integer, db.ForeignKey('users.id'))
 
     def __repr__(self):
         return '<Joke {}, {}, {}>'.format(self.id, self.text, self.user_id)
 
  
-class meta(db.Model):
+class Meta(db.Model):
     __tablename__='user_request_history'
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     sid = db.Column(db.Integer, nullable=False)
     ip = db.Column(db.Integer, nullable=False)
     timestamp = db.Column(db.DateTime, nullable=False)
-    user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
+    user_id = db.Column(db.Integer, db.ForeignKey('users.id'))
 
     def __repr__(self):
         return '<meta {}, {}, {}, {}, {}>'.format(
