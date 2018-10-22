@@ -1,5 +1,5 @@
 # app-jokes
-REST APP (Flask, PosgreSQL, Python)
+REST APP (Flask, PosgreSQL, Python3.6+)
 
 # This project isn't finished, nevertheless you are able to:
 - automaticaly set requirenmets for your venv
