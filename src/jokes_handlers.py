@@ -2,67 +2,71 @@ import logging
 
 import requests
 
-from flask import session, request, abort, Blueprint, current_app
+from flask import session, request, abort, Blueprint, current_app, Response
 
 from src import models
 from src.models import db
-# from src.auth_handlers import auth_required
 
 jokes = Blueprint("jokes", __name__)
 
+@jokes.before_request
+def before_request():
+    try:
+        if 'username' in session:
+            pass
+        else:
+            raise Exception
+    except Exception as e:
+        logging.error(e)
+        return Response(
+                    response="Access denied.\n", 
+                    status=401)
 
-@jokes.route('/generate_joke/<int:primary_key>', methods = ['GET', 'POST'])
-# @auth_required
+
+@jokes.route('/generate_joke', methods = ['GET', 'POST'])
 def generate_joke():
     '''
     Generate a joke using api: https://geek-jokes.sameerkumar.website/api
     '''
     response = None
-    try: 
-        if session['logged_in'] == True:    
-            user_id = models.User.query.filter(models.User.name == session['username']).id
-            response = requests.get("https://geek-jokes.sameerkumar.website/api")
-            if response:
-                    joke_text = response.json()+"\n" 
-                    try:
-                        with app.app_context():
-                            joke = models.Joke(text=joke_text, user_id=user_id)
-                            db.session.add(joke)
-                            db.session.commit()
-                    except (Exception, e):
-                        logging.error('Not unigue joke', e)
-                        return Response(
-                                "Not uniqie joke", 
-                                status='400')
-                    else:
-                        logging.info(f"A joke was generated and saved for {session['username']}")
-                        return Response(
-                            f"A joke was generated and saved to db", 
-                            status='200')
-            else: raise Exception
-        else: 
-            return login()
-    except:
-        logging.error('Geek Api isn\'t responding...')
-        abort(400) #"Bad request"
+    try:
+        response = requests.get("https://geek-jokes.sameerkumar.website/api")
+        # return Response(response.json(), 200)
+        if response is not None:
+            user_id = models.User.query.filter(models.User.username == session['username']).first().id
+            joke_text = response.json()+"\n" 
+            joke = models.Joke(text=joke_text, user_id=user_id)
+            db.session.add(joke)
+            db.session.commit()
+            logging.info(f"A joke was generated and saved for {session['username']}")
+            return Response(
+                response=f"A joke was generated and saved to db", 
+                status='200')
+        else:
+            logging.error("API https://geek-jokes.sameerkumar.website/api is not respondig" )
+            return Response(
+                    response="Geek api is not responding",
+                    status=400)
+
+    except Exception as e:
+        logging.error('Not unigue joke')
+        return Response(
+                response="Not uniqie joke", 
+                status='400')
 
 @jokes.route('/get_joke/<int:primary_key>', methods = ['GET'])
-# @auth_required
 def get_joke(primary_key):
     pass
 
 
 @jokes.route('/show_jokes', methods = ['GET'])
-# @auth_required
 def show_jokes():
     pass
 
 @jokes.route('/update_joke/<int:primary_key>', methods = ['POST'])
-# @auth_required
 def update_joke(primary_key):
     pass
 
 @jokes.route('/delete_joke/<int:primary_key>', methods = ['DELETE']) #203
-# @auth_required
 def delete_joke(primary_key):
     pass

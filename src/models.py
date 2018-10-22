@@ -21,7 +21,7 @@ class User(db.Model):
     #     return bcrypt.checkpw(password.encode('utf-8'), self.password_hash.encode('utf-8'))
 
     def __repr__(self):
-        return '<User {}, {}, {}>'.format(self.id, self.name, self.password_hash)
+        return '<User {}, {}, {}>'.format(self.id, self.username, self.password_hash)
 
     @property
     def password(self):

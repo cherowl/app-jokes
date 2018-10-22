@@ -26,9 +26,7 @@ def create_app():
 
     # init sqlalchemy db connection
     db.init_app(app)
-    with app.app_context():
-        db.drop_all()
-        db.create_all()
+    # db.create_all()
 
     app.register_blueprint(auth, url_prefix='/auth')
     app.register_blueprint(jokes, url_prefix='/jokes')
@@ -43,8 +41,6 @@ def create_simple_app():
     app.config.from_envvar("CONFIG")    
 
     db.init_app(app)
-    with app.app_context():
-        db.drop_all()
-        db.create_all()
+
     session['logging_in'] == False
     return app
