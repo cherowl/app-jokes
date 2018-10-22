@@ -10,5 +10,5 @@ REST APP (Flask, PosgreSQL, Python3.6+)
 
 # About loading:
 Check env variables CONFIG (it must points to one of the configs from scr/config) and PYTHONPATH (-//- your working dir):
-export CONFIG=/usr/src/app/config/production.py
-export PYTHONPATH=$(pwd)
+- export CONFIG=/usr/src/app/config/production.py
+- export PYTHONPATH=$(pwd)
