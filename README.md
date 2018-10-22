@@ -7,3 +7,8 @@ REST APP (Flask, PosgreSQL, Python3.6+)
 - manage configurations
 - testing exists in code (temporaraly)
 - see simple docker file
+
+# About loading:
+Check env variables CONFIG (it must points to one of the configs from scr/config) and PYTHONPATH (-//- your working dir):
+export CONFIG=/usr/src/app/config/production.py
+export PYTHONPATH=$(pwd)
