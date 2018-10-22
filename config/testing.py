@@ -8,10 +8,12 @@ SECRET_KEY = 'some_secret'
 DB_USER = "test_user"
 DB_PASSWORD = "test"
 DB_SERVER = "localhost"
-DB_NAME = "test_db"
+DB_NAME = "users_jokes" # another for texting
 
 # SQL-Alchemy
-SQLALCHEMY_DATABASE_URI = f"postgresql://{DB_USER}:{DB_PASSWORD}@{DB_SERVER}/{DB_NAME}"
+# SQLALCHEMY_DATABASE_URI = f"postgresql://{DB_USER}:{DB_PASSWORD}@{DB_SERVER}/{DB_NAME}"
+SQLALCHEMY_DATABASE_URI = os.environ.get('DEV_DATABASE_URL') or \
+                            'sqlite:///' + os.path.join(APP_DIR + '/src/db/' + DB_NAME + '.db')
 SQLALCHEMY_TRACK_MODIFICATIONS = False
 
 # Logging

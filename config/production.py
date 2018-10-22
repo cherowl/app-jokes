@@ -8,11 +8,13 @@ SECRET_KEY = 'some_secret'
 # Database
 DB_USER = "dummy_user"
 DB_PASSWORD = "dummy"
-DB_SERVER = "postgresql"
-DB_NAME = "users_jokes"
+DB_SERVER = "sqlite"
+DB_NAME = "users_jokes" # another for production
 
 # SQL-Alchemy
-SQLALCHEMY_DATABASE_URI = f"postgresql://{DB_USER}:{DB_PASSWORD}@{DB_SERVER}/{DB_NAME}"
+SQLALCHEMY_DATABASE_URI = os.environ.get('DEV_DATABASE_URL') or \
+                            'sqlite:///' + os.path.join(APP_DIR + '/src/db/' + DB_NAME + '.db')
+# SQLALCHEMY_DATABASE_URI = f"postgresql://{DB_USER}:{DB_PASSWORD}@{DB_SERVER}/{DB_NAME}"
 SQLALCHEMY_TRACK_MODIFICATIONS = False
 
 # Logging
