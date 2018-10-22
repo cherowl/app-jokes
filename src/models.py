@@ -7,13 +7,13 @@ db = SQLAlchemy()
 class User(db.Model):
     __tablename__='users'
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
-    name = db.Column(db.String(64), unique=True, nullable=False)
+    username = db.Column(db.String(64), unique=True, nullable=False)
     password_hash = db.Column(db.String(128), nullable=False)   
     meta = db.relationship('Meta', backref='user', lazy='dynamic')
     jokes = db.relationship('Joke', backref='user', lazy='dynamic')
 
     def __init__(self, username, password):
-        self.name = username
+        self.username = username
         self.password_hash = generate_password_hash(password)
         # self.password_hash = bcrypt.hashpw(password.encode("utf-8"),
         #                                    bcrypt.gensalt()).decode("utf-8")

@@ -39,12 +39,10 @@ def start():
 
 @auth.route('/register', methods=["GET", "POST"])  
 def register():
-    # return Response(request.json.get("username"), 200)
     try:
         username = request.json.get("username")
         password = request.json.get("password")
         if username and password:
-            session["username"] = username
             user = models.User(username=username, password=password)
             try:    
                 db.session.add(user)
@@ -73,8 +71,10 @@ def login():
     try:
         username = request.json.get("username")
         password = request.json.get("password")
-        user = models.User.query.filter(models.User.name == username)
+        # user = models.User.query.filter(models.User.name == username).first()
         # password = request.form["password"]
+        user = User.query.filter_by(username = username).first()
+        # return Response(user, 200)
         if user is not None and user.check_password(password):
             # session.clear()
             session["username"] = username
