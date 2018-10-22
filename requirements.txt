@@ -9,21 +9,25 @@ certifi==2018.8.24        # via requests
 chardet==3.0.4            # via requests
 click==7.0                # via flask, pip-tools
 configparser==3.5.0
+dnspython==1.15.0         # via eventlet
+eventlet==0.24.1
 flask-basicauth==0.2.0
 flask-cors==3.0.6
 flask-migrate==2.3.0
 flask-sqlalchemy==2.3.2
 flask==1.0.2
+greenlet==0.4.15          # via eventlet
 idna==2.7                 # via requests
 itsdangerous==0.24
 jinja2==2.10              # via flask
 mako==1.0.7               # via alembic
 markupsafe==1.0           # via jinja2, mako
+monotonic==1.5            # via eventlet
 pip-tools==3.1.0
 python-dateutil==2.7.3    # via alembic
 python-editor==1.0.3      # via alembic
 requests==2.19.1
-six==1.11.0               # via flask-cors, pip-tools, python-dateutil
+six==1.11.0               # via eventlet, flask-cors, pip-tools, python-dateutil
 sqlalchemy==1.2.12        # via alembic, flask-sqlalchemy
 urllib3==1.23             # via requests
 werkzeug==0.14.1

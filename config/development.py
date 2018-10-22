@@ -2,7 +2,7 @@ import os
 import logging
 
 # Extra
-APP_DIR = '/home/elena/workspace/selectel/app-jokes' # TODO
+APP_DIR = os.getcwd()
 BASEDIR = os.path.abspath(os.path.dirname(__file__)) 
 BASIC_AUTH_FORCE = True
 BASIC_AUTH_USERNAME = 'cherowl'

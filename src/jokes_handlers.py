@@ -62,7 +62,7 @@ def show_jokes():
 def update_joke(primary_key):
     pass
 
-@jokes.route('/delete_joke/<int:primary_key>', methods = ['DELETE'])
+@jokes.route('/delete_joke/<int:primary_key>', methods = ['DELETE']) #203
 # @auth_required
 def delete_joke(primary_key):
     pass

@@ -13,7 +13,7 @@ setuptools.setup(
     long_description_content_type="...",
     url={"Source Code":"git@github.com:cherowl/api-jokes.git"},
     packages=setuptools.find_packages(),
-    install_requires=['flask', 'pip-tools', 'configparser', 'requests', 'flask-sqlalchemy', 'werkzeug', 'flask_basicauth', 'itsdangerous', 'flask_cors', 'flask_migrate'] 
+    install_requires=['flask', 'pip-tools', 'configparser', 'requests', 'flask-sqlalchemy', 'werkzeug', 'flask_basicauth', 'itsdangerous', 'flask_cors', 'flask_migrate', 'eventlet'] 
     # python_requires="python3.6.5"
     
 )
