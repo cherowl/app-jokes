@@ -44,19 +44,23 @@ def register():
         password = request.json.get("password")
         if username and password:
             user = models.User(username=username, password=password)
-            try:    
-                db.session.add(user)
-                db.session.commit()
-                logging.info("Login by user = {}".format(username))
-                return Response(
-                           response="You're registred successfuly\n", 
-                           status=200,
-                           headers={"Access-Control-Allow-Credentials": "true"})    
-            except Exception as e:
-                logging.error(e)
-                return Response(
-                        response="Already exists!\n",
-                        status=409) 
+            if user is not None:
+                try:    
+                    with app.app_context():
+                        db.session.add(user)
+                        db.session.commit()
+                    logging.info("Login by user = {}".format(username))
+                    return Response(
+                               response="You're registred successfuly\n", 
+                               status=200,
+                               headers={"Access-Control-Allow-Credentials": "true"})    
+                except Exception as e:
+                    logging.error(e)
+                    return Response(
+                            response="Already exists!\n",
+                            status=409) 
+            else:
+                raise Exception
         else:
             raise Exception
     except Exception as e:
@@ -73,7 +77,7 @@ def login():
         password = request.json.get("password")
         # user = models.User.query.filter(models.User.name == username).first()
         # password = request.form["password"]
-        user = User.query.filter_by(username = username).first()
+        user = models.User.query.filter_by(username = username).first()
         # return Response(user, 200)
         if user is not None and user.check_password(password):
             # session.clear()
@@ -88,7 +92,7 @@ def login():
     except Exception as e:
         logging.error(e)
         return Response(
-                response=f"Wrong credentials! {e}.\n",
+                response=f"Wrong credentials! {e}\n",
                 status=401)   
 
 
