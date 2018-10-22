@@ -111,9 +111,13 @@ def logout():
 @auth.before_request
 def before_request():
     try:
-        if 'username' not in session and request.endpoint == "auth.register" \
-                or request.endpoint != "auth":
+        if 'username' in session:
             pass
+        elif 'username' not in session:
+                if request.endpoint == "auth.register" \
+                or request.endpoint == "auth.login" \
+                or request.endpoint == "auth":
+                    pass    
         else:
             raise Exception
     except Exception as e:
