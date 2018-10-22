@@ -88,7 +88,7 @@ def login():
     except Exception as e:
         logging.error(e)
         return Response(
-                response=f"Wrong credentials, {username}!\n",
+                response=f"Wrong credentials! {e}.\n",
                 status=401)   
 
 
