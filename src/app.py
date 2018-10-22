@@ -1,7 +1,7 @@
 import os
 import logging
 
-from flask import Flask, session, current_app
+from flask import Flask, session
 from flask_cors import CORS
 from flask_basicauth import BasicAuth
 from flask_sqlalchemy import SQLAlchemy
@@ -42,5 +42,4 @@ def create_simple_app():
 
     db.init_app(app)
 
-    session['logging_in'] == False
     return app

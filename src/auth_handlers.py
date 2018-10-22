@@ -56,7 +56,7 @@ def register():
                        status=200,
                        headers={"Access-Control-Allow-Credentials": "true"})    
         else:
-            raise Exception
+            raise (Exception,e)
     else:
     # except Exception as e:
         logging.error(e)
@@ -73,27 +73,29 @@ def login():
         print(username, password)
         user = models.User.query.filter(models.User.username == username).first()
         print(user)
-        # return Response(user, 200)
         if user is not None and user.check_password(password):
-            # session.clear()
             session["username"] = username
             logging.info("Login by user = {}".format(username))
             return Response(
                         response=f"You're logged as {username}!\n", 
-                        status=200,
-                        headers={"Access-Control-Allow-Credentials": "true"})
+                        status=200)
         else:
-            raise Exception
+            logging.error(f"Wrong credentials, {username}!\n")
+            return Response(
+                    response=f"Wrong credentials, {username}!\n",
+                    status=401)   
     except Exception as e:
         logging.error(e)
         return Response(
-                response=f"Wrong credentials, {username}!\n",
-                status=401)   
+                response=f"{e}",
+                status=401)  
 
 
-@auth.route("/logout", methods=["GET"])
+@auth.route("/logout", methods=["POST"])
 def logout():
     try:
+        if "username" not in session:
+            raise Exception
         # username = session["username"]
         # session.pop("username", None)
         # logging.info("Logout by user = {}".format(username))

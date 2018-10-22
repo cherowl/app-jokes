@@ -17,7 +17,7 @@ SECRET_KEY = 'some_secret'
 DB_USER = "cherowl"
 DB_PASSWORD = "matrix" 
 DB_SERVER = "localhost"
-DB_NAME = "dev"
+DB_NAME = "users_jokes"
 
 # SQL-Alchemy
 SQLALCHEMY_DATABASE_URI = os.environ.get('DEV_DATABASE_URL') or \

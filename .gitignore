@@ -2,12 +2,7 @@
 info.md
 load.sh
 test.py
-/ygn/*
-
-# not ready:
-/app/uniqueness.py
-/app/database.py
-/app/authentication.py
+setup.py
 
 venv/*
 __pycache__
