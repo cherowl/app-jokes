@@ -23,5 +23,5 @@ requests==2.19.1
 six==1.11.0               # via eventlet, flask-cors, pip-tools, python-dateutil
 sqlalchemy==1.2.12        # via alembic, flask-sqlalchemy
 urllib3==1.23             # via requests
-werkzeug==0.14.1
+werkzeug==0.15.3
 psycopg2==2.7.1
