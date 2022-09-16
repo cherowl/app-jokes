@@ -14,7 +14,7 @@ greenlet==0.4.15          # via eventlet
 idna==2.7                 # via requests
 itsdangerous==0.24
 jinja2==2.10              # via flask
-mako==1.0.7               # via alembic
+mako==1.2.2               # via alembic
 markupsafe==1.0           # via jinja2, mako
 monotonic==1.5            # via eventlet
 python-dateutil==2.7.3    # via alembic
