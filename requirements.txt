@@ -1,5 +1,5 @@
 alembic==1.0.1            # via flask-migrate
-certifi==2018.8.24        # via requests
+certifi==2022.12.7        # via requests
 chardet==3.0.4            # via requests
 click==7.0                # via flask, pip-tools
 configparser==3.5.0
